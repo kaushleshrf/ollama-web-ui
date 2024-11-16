@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ollama-frontend
+  namespace: kk1
+  labels:
+    app: ollama
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ollama
+  template:
+    metadata:
+      labels:
+        app: ollama
+    spec:
+      containers:
+        - name: ollama-container
+          image: ghcr.io/open-webui/open-webui:main
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ollama-webui
+              value: http://backend-service.kk1.svc.cluster.local
